@@ -20,7 +20,23 @@ UITextView *hiddenTextView;
         hiddenTextView.keyboardType = UIKeyboardTypeDecimalPad;
         hiddenTextView.delegate = self;
         [self.viewController.view addSubview:hiddenTextView];
+        
+        UIToolbar* keyboardToolbar = [[UIToolbar alloc] init];
+        [keyboardToolbar sizeToFit];
+        UIBarButtonItem *flexBarButton = [[UIBarButtonItem alloc]
+                                          initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                          target:nil action:nil];
+        UIBarButtonItem *doneBarButton = [[UIBarButtonItem alloc]
+                                          initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                          target:self action:@selector(doneButtonPressed)];
+        keyboardToolbar.items = @[flexBarButton, doneBarButton];
+        hiddenTextView.inputAccessoryView = keyboardToolbar;
     }
+}
+
+- (void)doneButtonPressed
+{
+    [hiddenTextView resignFirstResponder];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -31,9 +47,14 @@ UITextView *hiddenTextView;
 }
 
 - (void) textViewDidEndEditing:(UITextView *)textView {
+    /*
     NSString *text = textView.text;
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:text];
     [self.commandDelegate sendPluginResult:pluginResult  callbackId:self.callbackId];
+     */
+
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
 }
 
 - (void)open:(CDVInvokedUrlCommand*)command

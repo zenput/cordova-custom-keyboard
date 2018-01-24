@@ -30,4 +30,23 @@
         <source-file src="src/ios/CDVCustomKeyboard.m" />
     </platform>
 
+        <!-- android -->
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="CustomKeyboard">
+                <param name="android-package"
+                    value="com.zenput.customkeyboard.CustomKeyboard"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.zenput.customkeyboard.CustomKeyboardActivity" />
+        </config-file>
+
+        <source-file src="src/android/CustomKeyboard.java"
+            target-dir="src/com/zenput/customkeyboard" />
+        <source-file src="src/android/CustomKeyboardActivity.java"
+            target-dir="src/com/zenput/customkeyboard" />
+    </platform>
+
 </plugin>
